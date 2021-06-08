@@ -15,8 +15,13 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.0-canary.4/utilities.min.css" integrity="sha512-3kNKA7CLjkvtwC4QQROXw9vzfDCnp4pRyG3rO1BwyF2kn6TOMbBM+4AEpA2pvUHyCqfNALHHhe4+TzjAstRLJA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link rel="stylesheet" href="../static/css/style.css">
     </head>
-    <body>
+    <body class="min-h-screen bg-gray-50">
+        
+        {% block header %}{% endblock %}
+
         {% block content %}{% endblock %}
+
+        {% block footer %}{% endblock %}
 
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>

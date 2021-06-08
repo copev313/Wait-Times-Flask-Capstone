@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+
+{% block footer %}
+
+<footer class="fixed bottom-1 min-w-full p-2">
+    <div class="text-center font-medium text-sm">
+        Copyright &copy; 
+            <script>
+                const today = new Date();
+                document.write(today.getFullYear());
+            </script> 
+        Hashy Codes. All Rights Reserved.
+    </div>
+</footer>
+
+{% endblock %}
