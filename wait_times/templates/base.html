@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{% block title %}{% endblock %} - QueueTrackr</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.0-canary.4/tailwind.min.css" integrity="sha512-5teRd2oONg+Jm+7FWrD8+PZpA/YCq58TsOv4NdLZ6yaE0aNVSXsBjOeJqjGc6LjDo+17JW1wD/b1f6WBQnW4NA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.0-canary.4/base.min.css" integrity="sha512-+Y2CikxAKXqL51xTG8OPclTkh9rs35mY7G4/kwlAX7h7SYHeDuk2gyKUIp2scOxFD16wTVe84+7PtYV8cjz6vw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.0-canary.4/components.min.css" integrity="sha512-f6TS5CFJrH/EWmarcBwG54/kW9wwejYMcw+I7fRnGf33Vv4yCvy4BecCKTti3l8e8HnUiIbxx3V3CuUYGqR1uQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.0-canary.4/utilities.min.css" integrity="sha512-3kNKA7CLjkvtwC4QQROXw9vzfDCnp4pRyG3rO1BwyF2kn6TOMbBM+4AEpA2pvUHyCqfNALHHhe4+TzjAstRLJA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="../static/css/style.css">
+    </head>
+    <body>
+        {% block content %}{% endblock %}
+
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <script src="../static/js/script.js" async defer ></script>
+    </body>
+</html>
