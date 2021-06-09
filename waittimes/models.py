@@ -3,7 +3,7 @@ from datetime import datetime as dt
 from flask_login import UserMixin
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from app import db, login_manager
+from waittimes import db, login_manager
 
 
 class User(db.Model, UserMixin):

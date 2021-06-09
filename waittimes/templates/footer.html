@@ -1,17 +1,25 @@
 {% extends "base.html" %}
 
-
 {% block footer %}
-
 <footer class="fixed bottom-1 min-w-full p-2">
     <div class="text-center font-medium text-sm">
+        Icons made by <a  href="https://www.freepik.com"
+                          title="Freepik"
+                          class="text-yellow-800 hover:text-yellow-700">
+                        Freepik</a>
+
+        from <a href="https://www.flaticon.com/"
+                title="Flaticon"
+                class="text-yellow-800 hover:text-yellow-700">
+              www.flaticon.com</a>.
+
+        <br>
         Copyright &copy; 
-            <script>
-                const today = new Date();
-                document.write(today.getFullYear());
-            </script> 
+          <script>
+            const today = new Date();
+            document.write(today.getFullYear());
+          </script> 
         Hashy Codes. All Rights Reserved.
     </div>
 </footer>
-
 {% endblock %}
