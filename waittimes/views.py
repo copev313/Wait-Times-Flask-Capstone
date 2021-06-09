@@ -94,7 +94,7 @@ def logout():
 def dashboard(username):
     username = current_user.username or 'Mysterious_Stranger'
     return render_template('dashboard.html', username=username)
-
+'''https://codepen.io/themustafaomar/pen/jLMPKm'''
 
 # Ride Data Screen [PROTECTED]:
 @app.route('/admin/ride/<name>')
