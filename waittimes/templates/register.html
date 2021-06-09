@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}{{ 'Login' }}{% endblock %}
+{% block title %}{{ 'Register' }}{% endblock %}
 
 {% block header %}
   {% include "header.html" %}
@@ -24,6 +24,8 @@
                     name="username"
                     type="username"
                     value="{{ request.form.username }}"
+                    minlength="3"
+                    maxlength="16"
                     required
                     class="appearance-none relative block rounded-md w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 focus:z-10 sm:text-sm"
                     placeholder="Username"
@@ -35,7 +37,6 @@
                     name="email"
                     type="email"
                     value="{{ request.form.email }}"
-                    autocomplete="email"
                     required
                     class="appearance-none relative block rounded-md w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 focus:z-10 sm:text-sm"
                     placeholder="Email Address"
@@ -47,7 +48,8 @@
                     name="password"
                     type="password"
                     value="{{ request.form.password }}"
-                    autocomplete="current-password"
+                    pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                    title="Must contain at least one number, one uppercase and lowercase letter, and have at least 8 characters."
                     required
                     class="appearance-none relative block w-full rounded-md px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 focus:z-10 sm:text-sm"
                     placeholder="Password"
@@ -59,6 +61,7 @@
                     name="password-confirm"
                     type="password"
                     value="{{ request.form.confirm_password }}"
+                    minlength="8"
                     required
                     class="appearance-none relative block w-full rounded-md px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 focus:z-10 sm:text-sm"
                     placeholder="Confirm Password"
@@ -82,7 +85,7 @@
       <!-- Handle error messages -->
         {% with messages = get_flashed_messages() %}
           {% if messages %}
-            <div class="text-center text-pink-600 pt-2">
+            <div class="text-center text-pink-600 font-bold text-xl pt-2">
               {% for message in messages %}
                 {{ message }}
               {% endfor %}
