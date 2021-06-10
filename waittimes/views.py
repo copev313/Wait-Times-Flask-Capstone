@@ -80,7 +80,42 @@ def register():
     return render_template('register.html')
 
 
-# Logout Route [PROTECTED -- Redirect to Login Screen]
+''' * * * PROTECTED VIEWS * * * '''
+
+# Main Dashboard Screen:
+@app.route('/admin/dashboard/<username>')
+@login_required
+def dashboard(username):
+    return render_template('dashboard.html', username=current_user.username)
+
+
+# RIDES -->  Rides Dashboard:
+@app.route('/admin/rides-dash')
+def ride(username):
+    return render_template('ride.html', username=current_user.username)
+
+
+# RIDES -->  Change Ride Stats:
+# RIDES -->  Create Ride:
+# RIDES -->  Maintenence Records:
+
+# WAIT TIMES -->  Summary Report:
+# WAIT TIMES -->  Edit Times:
+# WAIT TIMES -->  Displays:
+
+# TICKETS --> Create Ticket:
+# TICKETS --> Edit Ticket:
+# TICKETS --> Ticket Records:
+
+
+# PROFILE --> Account Settings:
+@app.route('/admin/profile-settings', methods=['GET', 'POST'])
+@login_required
+def account_settings(username):
+    return render_template('dashboard.html', username=current_user.username)
+
+
+# PROFILE --> Logout [Redirect to Login Screen]
 @app.route('/admin/logout')
 @login_required
 def logout():
@@ -88,17 +123,4 @@ def logout():
     return redirect(url_for('login'))
 
 
-# Dashboard Screen [PROTECTED]:
-@app.route('/admin/dashboard/<username>')
-@login_required
-def dashboard(username):
-    username = current_user.username or 'Mysterious_Stranger'
-    return render_template('dashboard.html', username=username)
-'''https://codepen.io/themustafaomar/pen/jLMPKm'''
 
-# Ride Data Screen [PROTECTED]:
-@app.route('/admin/ride/<name>')
-def ride(name):
-    username = 'Hashy'
-    name = 'THE BIG OLE WHEEL'
-    return render_template('ride.html', username=username, ride_name=name)
