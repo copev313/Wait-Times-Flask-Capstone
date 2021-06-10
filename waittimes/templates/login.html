@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 
-{% block title %}{{ 'Login' }}{% endblock %}
+{% block title %}{{ 'Login' }}{% endblock title %}
 
 {% block header %}
   {% include "header.html" %}
-{% endblock %}
+{% endblock header %}
 
 {% block content %}
 <div class="flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -85,8 +85,8 @@
       </form>
     </div>
   </div>
-{% endblock %}
+{% endblock content %}
 
 {% block footer %}
   {% include "footer.html" %}
-{% endblock %}
+{% endblock footer %}

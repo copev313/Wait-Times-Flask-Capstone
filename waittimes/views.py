@@ -28,8 +28,7 @@ def page_not_found(error):
 def login():
     # [CASE] The current_user is logged in:
     if current_user.is_authenticated:
-        username = current_user.username or 'Mysterious_Stranger'
-        return redirect(url_for('dashboard', username=username))
+        return redirect(url_for('dashboard', username=current_user.username))
 
     # [CASE] POST request:
     if (request.method == 'POST'):
@@ -75,7 +74,7 @@ def register():
         # Login User:
         login_user(user)
         user.set_last_login()
-        return redirect(url_for('dashboard', username=request.form['username']))
+        return redirect(url_for('dashboard', username=current_user.username))
     
     return render_template('register.html')
 
@@ -109,10 +108,11 @@ def ride(username):
 
 
 # PROFILE --> Account Settings:
-@app.route('/admin/profile-settings', methods=['GET', 'POST'])
+@app.route('/admin/profile-settings')
 @login_required
 def account_settings(username):
-    return render_template('dashboard.html', username=current_user.username)
+    return render_template('account_settings.html',
+                           username=current_user.username)
 
 
 # PROFILE --> Logout [Redirect to Login Screen]
