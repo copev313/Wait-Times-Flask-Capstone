@@ -28,7 +28,8 @@ def page_not_found(error):
 def login():
     # [CASE] The current_user is logged in:
     if current_user.is_authenticated:
-        return redirect(url_for('dashboard', username=current_user.username))
+        return redirect(url_for('dashboard',
+                                username=current_user.username))
 
     # [CASE] POST request:
     if (request.method == 'POST'):
@@ -41,10 +42,11 @@ def login():
         
         # [CASE] User Authenticated:
         login_user(user, remember=request.form['remember'])
-        user.set_last_login()
+        current_user.set_last_login()
         next_page = request.args.get('next')
         if not next_page or (url_parse(next_page).netloc != ''):
-            next_page = url_for('dashboard', username=user.username)
+            next_page = url_for('dashboard',
+                                username=current_user.username)
         return redirect(next_page)
 
     return render_template('login.html')
@@ -55,8 +57,8 @@ def login():
 def register():
     # [CASE] The current_user is logged in:
     if current_user.is_authenticated:
-        username = current_user.username or 'Mysterious_Stranger'
-        return redirect(url_for('dashboard', username=username))
+        return redirect(url_for('dashboard',
+                                username=current_user.username))
     
     # [CASE] POST request:
     if (request.method == 'POST'):
@@ -73,8 +75,9 @@ def register():
 
         # Login User:
         login_user(user)
-        user.set_last_login()
-        return redirect(url_for('dashboard', username=current_user.username))
+        current_user.set_last_login()
+        return redirect(url_for('dashboard',
+                                username=current_user.username))
     
     return render_template('register.html')
 
@@ -85,15 +88,11 @@ def register():
 @app.route('/admin/dashboard/<username>')
 @login_required
 def dashboard(username):
-    return render_template('dashboard.html', username=current_user.username)
+    return render_template('dashboard.html',
+                           username=current_user.username)
 
 
 # RIDES -->  Rides Dashboard:
-@app.route('/admin/rides-dash')
-def ride(username):
-    return render_template('ride.html', username=current_user.username)
-
-
 # RIDES -->  Change Ride Stats:
 # RIDES -->  Create Ride:
 # RIDES -->  Maintenence Records:

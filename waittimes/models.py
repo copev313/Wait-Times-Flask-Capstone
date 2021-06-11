@@ -16,6 +16,7 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(50), index=True, unique=False)
     email = db.Column(db.String(75), index=True, unique=True)
     password_hash = db.Column(db.String(150))
+    is_admin = db.Column(db.Boolean, default=False)
 
     def __init__(self, username, email, password):
         self.username = username
@@ -41,6 +42,8 @@ class User(db.Model, UserMixin):
 
     def set_last_login(self):
         self.last_login = dt.utcnow()
+        db.session.add(self)
+        db.session.commit()
 
     @login_manager.user_loader
     def load_user(id):

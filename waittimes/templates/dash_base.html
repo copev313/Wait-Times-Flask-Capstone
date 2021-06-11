@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{% block title %}{% endblock %} - QueueTrackr</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.0-canary.4/tailwind.min.css" integrity="sha512-5teRd2oONg+Jm+7FWrD8+PZpA/YCq58TsOv4NdLZ6yaE0aNVSXsBjOeJqjGc6LjDo+17JW1wD/b1f6WBQnW4NA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.0-canary.4/base.min.css" integrity="sha512-+Y2CikxAKXqL51xTG8OPclTkh9rs35mY7G4/kwlAX7h7SYHeDuk2gyKUIp2scOxFD16wTVe84+7PtYV8cjz6vw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.0-canary.4/components.min.css" integrity="sha512-f6TS5CFJrH/EWmarcBwG54/kW9wwejYMcw+I7fRnGf33Vv4yCvy4BecCKTti3l8e8HnUiIbxx3V3CuUYGqR1uQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.0-canary.4/utilities.min.css" integrity="sha512-3kNKA7CLjkvtwC4QQROXw9vzfDCnp4pRyG3rO1BwyF2kn6TOMbBM+4AEpA2pvUHyCqfNALHHhe4+TzjAstRLJA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    </head>
+
+    <body class="min-h-screen bg-gray-50">
+        <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer ></script>
+        <div class="bg-gray-300">
+        <div class="flex flex-col sm:flex-row sm:justify-left">
+            <div class="w-64 h-screen bg-gray-800 border-solid border-r-4 border-black">
+            <nav class="mt-6">
+                <div class="bg-gray-700">
+                <button onclick="location.href='/admin/dashboard/{{ username }}';"
+                class="mb-8 w-full flex justify-between items-center py-3 px-6 text-gray-100 cursor-pointer hover:bg-gray-600 hover:text-gray-100 focus:outline-none">
+                    <span class="flex items-center">
+                    <header class="flex flex-row">
+                        <div>
+                        <img  src="{{ url_for('static', filename='images/queue.svg') }}"
+                                alt="queue logo"
+                                class="w-auto h-12 pr-1"
+                        />
+                        </div>
+                        
+                        <div>
+                        <h1 class="text-2xl font-bold text-yellow-500 pt-2" id="header-title">QueueTrackr</h1>
+                        </div>
+                    </header>
+                    </span>
+                </button>
+                </div>
+
+                <div x-data="{ open: false }">
+                <button @click="open = !open" class="mt-4 w-full flex justify-between items-center py-3 px-6 text-gray-100 cursor-pointer hover:bg-gray-700 hover:text-red-400 focus:outline-none">
+                    <span class="flex items-center">
+                    <img  src="{{ url_for('static', filename='images/ferris-wheel.svg') }}"
+                            alt="ferris wheel"
+                            class="h-auto w-6"
+                    />
+                    <span class="mx-4 font-medium">Rides</span>
+                    </span>
+                    <span>
+                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path x-show="! open" d="M9 5L16 12L9 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;"></path>
+                        <path x-show="open" d="M19 9L12 16L5 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                    </span>
+                </button>
+
+                <div x-show="open" class="bg-gray-700">
+                    <a class="py-2 px-16 block text-sm text-gray-100 hover:bg-red-400 hover:text-gray-800" href="#">Dashboard</a>
+                    <a class="py-2 px-16 block text-sm text-gray-100 hover:bg-red-400 hover:text-gray-800" href="#">Change Ride Stats</a>
+                    <a class="py-2 px-16 block text-sm text-gray-100 hover:bg-red-400 hover:text-gray-800" href="#">Create Ride</a>
+                    <a class="py-2 px-16 block text-sm text-gray-100 hover:bg-red-400 hover:text-gray-800" href="#">Maintenence Records</a>
+                </div>
+                </div>
+
+                <div x-data="{ open: false }">
+                <button @click="open = !open" class="mt-4 w-full flex justify-between items-center py-3 px-6 text-gray-100 cursor-pointer hover:bg-gray-700 hover:text-blue-400 focus:outline-none">
+                    <span class="flex items-center">
+                    <img  src="{{ url_for('static', filename='images/stopwatch.svg') }}"
+                            alt="stopwatch"
+                            class="h-auto w-6"
+                    />
+                    <span class="mx-4 font-medium">Wait Times</span>
+                    </span>
+
+                    <span>
+                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path x-show="! open" d="M9 5L16 12L9 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;"></path>
+                        <path x-show="open" d="M19 9L12 16L5 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                    </span>
+                </button>
+
+                <div x-show="open" class="bg-gray-700">
+                    <a class="py-2 px-16 block text-sm text-gray-100 hover:bg-blue-400 hover:text-gray-800" href="#">Summary Report</a>
+                    <a class="py-2 px-16 block text-sm text-gray-100 hover:bg-blue-400 hover:text-gray-800" href="#">Edit Times</a>
+                    <a class="py-2 px-16 block text-sm text-gray-100 hover:bg-blue-400 hover:text-gray-800" href="#">Displays</a>
+                </div>
+                </div>
+
+                <div x-data="{ open: false }">
+                <button @click="open = !open" class="mt-4 w-full flex justify-between items-center py-3 px-6 text-gray-100 cursor-pointer hover:bg-gray-700 hover:text-green-300 focus:outline-none">
+                    <span class="flex items-center">
+                    <img  src="{{ url_for('static', filename='images/ticket.svg') }}"
+                            alt="ticket"
+                            class="h-auto w-6"
+                    />
+                    <span class="mx-4 font-medium">Tickets</span>
+                    </span>
+
+                    <span>
+                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path x-show="! open" d="M9 5L16 12L9 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;"></path>
+                        <path x-show="open" d="M19 9L12 16L5 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                    </span>
+                </button>
+
+                <div x-show="open" class="bg-gray-700">
+                    <a class="py-2 px-16 block text-sm text-gray-100 hover:bg-green-300 hover:text-gray-800" href="#">Create Ticket</a>
+                    <a class="py-2 px-16 block text-sm text-gray-100 hover:bg-green-300 hover:text-gray-800" href="#">Edit Ticket</a>
+                    <a class="py-2 px-16 block text-sm text-gray-100 hover:bg-green-300 hover:text-gray-800" href="#">Ticket Records</a>
+                </div>
+                </div>
+
+                <div class="absolute bottom-2 mb-10" x-data="{ open: false }">
+                <button @click="open = !open" class="mt-4 w-full flex justify-between items-center py-3 px-6 text-gray-100 cursor-pointer hover:bg-gray-700 hover:text-yellow-300 focus:outline-none">
+                    <span class="flex items-center">
+                    <img  src="{{ url_for('static', filename='images/user.svg') }}"
+                            alt="user icon"
+                            class="h-auto w-6"
+                    />
+                    <span class="mx-4 font-medium">{{ username }}</span>
+                    </span>
+
+                    <span>
+                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path x-show="! open" d="M9 5L16 12L9 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;"></path>
+                        <path x-show="open" d="M19 9L12 16L5 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                    </span>
+                </button>
+
+                <div x-show="open" class="bg-gray-700">
+                    <a  class="py-2 px-16 block text-sm text-gray-100 hover:bg-yellow-300 hover:text-gray-800"
+                        href="{{ url_for('account_settings') }}">
+                        Account Settings
+                    </a>
+                    <a  class="py-2 px-16 block text-sm text-gray-100 hover:bg-yellow-300 hover:text-gray-800"
+                        href="{{ url_for('logout') }}">
+                        Logout
+                    </a>
+                </div>
+                </div>
+            </nav>
+            </div>
+
+            <main class="container m-4 p-2">
+                {% block dash_content %}{% endblock dash_content %}
+            </main>
+
+        </div>
+        </div>
+
+        {% block content %}{% endblock content %}
+
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <script src="{{ url_for('static', filename='js/script.js') }}" async defer ></script>
+    </body>
+</html>
