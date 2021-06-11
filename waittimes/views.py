@@ -28,8 +28,7 @@ def page_not_found(error):
 def login():
     # [CASE] The current_user is logged in:
     if current_user.is_authenticated:
-        return redirect(url_for('dashboard',
-                                username=current_user.username))
+        return redirect(url_for('dashboard'))
 
     # [CASE] POST request:
     if (request.method == 'POST'):
@@ -45,8 +44,7 @@ def login():
         current_user.set_last_login()
         next_page = request.args.get('next')
         if not next_page or (url_parse(next_page).netloc != ''):
-            next_page = url_for('dashboard',
-                                username=current_user.username)
+            next_page = url_for('dashboard')
         return redirect(next_page)
 
     return render_template('login.html')
@@ -57,8 +55,7 @@ def login():
 def register():
     # [CASE] The current_user is logged in:
     if current_user.is_authenticated:
-        return redirect(url_for('dashboard',
-                                username=current_user.username))
+        return redirect(url_for('dashboard'))
     
     # [CASE] POST request:
     if (request.method == 'POST'):
@@ -76,8 +73,7 @@ def register():
         # Login User:
         login_user(user)
         current_user.set_last_login()
-        return redirect(url_for('dashboard',
-                                username=current_user.username))
+        return redirect(url_for('dashboard'))
     
     return render_template('register.html')
 
@@ -85,14 +81,18 @@ def register():
 ''' * * * PROTECTED VIEWS * * * '''
 
 # Main Dashboard Screen:
-@app.route('/admin/dashboard/<username>')
+@app.route('/admin/dashboard')
 @login_required
-def dashboard(username):
-    return render_template('dashboard.html',
-                           username=current_user.username)
+def dashboard():
+    return render_template('dashboard.html')
 
 
 # RIDES -->  Rides Dashboard:
+@app.route('/admin/rides/dashboard')
+@login_required
+def ride_dashboard():
+    return render_template('ride_dashboard.html')
+
 # RIDES -->  Change Ride Stats:
 # RIDES -->  Create Ride:
 # RIDES -->  Maintenence Records:
@@ -107,11 +107,10 @@ def dashboard(username):
 
 
 # PROFILE --> Account Settings:
-@app.route('/admin/profile-settings')
+@app.route('/admin/profile/settings')
 @login_required
-def account_settings(username):
-    return render_template('account_settings.html',
-                           username=current_user.username)
+def account_settings():
+    return render_template('account_settings.html')
 
 
 # PROFILE --> Logout [Redirect to Login Screen]
