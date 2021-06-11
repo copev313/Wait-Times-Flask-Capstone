@@ -12,7 +12,7 @@ from flask_login import (
     logout_user,
 )
 from werkzeug.urls import url_parse
-from waittimes import app
+from waittimes import app, db
 from .models import User
 
 
@@ -78,7 +78,7 @@ def register():
     return render_template('register.html')
 
 
-''' * * * PROTECTED VIEWS * * * '''
+''' * * * * * * PROTECTED VIEWS * * * * * * '''
 
 # Main Dashboard Screen:
 @app.route('/admin/dashboard')
@@ -93,24 +93,95 @@ def dashboard():
 def ride_dashboard():
     return render_template('ride_dashboard.html')
 
-# RIDES -->  Change Ride Stats:
+
+# RIDES -->  Change Ride Info:
+@app.route('/admin/rides/edit')
+@login_required
+def edit_ride_info():
+    return render_template('change_ride_info.html')
+
+
 # RIDES -->  Create Ride:
-# RIDES -->  Maintenence Records:
+@app.route('/admin/rides/create')
+@login_required
+def create_ride():
+    return render_template('create_a_ride.html')
+
 
 # WAIT TIMES -->  Summary Report:
+@app.route('/admin/waittimes/summary')
+@login_required
+def wait_summary():
+    return render_template('wt_summary.html')
+
+
 # WAIT TIMES -->  Edit Times:
-# WAIT TIMES -->  Displays:
+@app.route('/admin/waittimes/edit')
+@login_required
+def wait_edit():
+    return render_template('wt_edit.html')
+
 
 # TICKETS --> Create Ticket:
+@app.route('/admin/tickets/create')
+@login_required
+def create_ticket():
+    return render_template('create_ticket.html')
+
 # TICKETS --> Edit Ticket:
+@app.route('/admin/tickets/edit')
+@login_required
+def edit_ticket():
+    return render_template('edit_ticket.html')
+
+
 # TICKETS --> Ticket Records:
+@app.route('/admin/tickets/records')
+@login_required
+def ticket_records():
+    return render_template('ticket_records.html')
 
 
 # PROFILE --> Account Settings:
-@app.route('/admin/profile/settings')
+@app.route('/admin/profile/settings', methods=['GET', 'POST'])
 @login_required
 def account_settings():
-    return render_template('account_settings.html')
+    user = current_user
+    msg = ""
+
+    # [CASE] POST request:
+    if (request.method == 'POST'):
+        # Updating Username:
+        if request.form['username']:
+            user.username = request.form['username']
+            msg = "Update Successful!"
+
+        # Updating Email Address:
+        if request.form['email']:
+            user.email = request.form['email']
+            msg = "Update Successful!"
+
+        # Updating Password:
+        if request.form['password']:
+            # [CASE] Confirm password DOES NOT match password:
+            if (request.form['password'] != request.form['password-confirm']):
+                flash("Passwords do not match. Please try again.")
+                return redirect(url_for('account_settings'))
+
+            user.set_password(request.form['password'])
+            msg = "Password Updated!"
+
+        db.session.add(user)
+        db.session.commit()
+
+        # Handle Update Message:
+        if msg:
+            flash(msg)
+
+        return redirect(url_for('account_settings'))
+
+    else:
+        return render_template('account_settings.html')
 
 
 # PROFILE --> Logout [Redirect to Login Screen]
@@ -119,6 +190,3 @@ def account_settings():
 def logout():
     logout_user()
     return redirect(url_for('login'))
-
-
-

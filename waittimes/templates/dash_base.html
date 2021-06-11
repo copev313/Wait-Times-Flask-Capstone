@@ -23,7 +23,7 @@
             <div class="w-64 h-screen bg-gray-800 border-solid border-r-4 border-black">
             <nav class="mt-6">
                 <div class="bg-gray-700">
-                <button onclick="location.href='/admin/dashboard/{{ username }}';"
+                <button onclick="location.href='/admin/dashboard';"
                 class="mb-8 w-full flex justify-between items-center py-3 px-6 text-gray-100 cursor-pointer hover:bg-gray-600 hover:text-gray-100 focus:outline-none">
                     <span class="flex items-center">
                     <header class="flex flex-row">
@@ -61,24 +61,20 @@
 
                 <div x-show="open" class="bg-gray-700">
                     <a  class="py-2 px-16 block text-sm text-gray-100 hover:bg-red-400 hover:text-gray-800"
-                        href="{{ url_for('ride_dashboard') }}>">
+                        href="{{ url_for('ride_dashboard') }}">
                         Dashboard
                     </a>
 
                     <a  class="py-2 px-16 block text-sm text-gray-100 hover:bg-red-400 hover:text-gray-800"
-                        href="#">
-                        Change Ride Stats
+                        href="{{ url_for('edit_ride_info') }}">
+                        Edit Ride Stats
                     </a>
 
                     <a  class="py-2 px-16 block text-sm text-gray-100 hover:bg-red-400 hover:text-gray-800"
-                        href="#">
+                        href="{{ url_for('create_ride') }}">
                         Create Ride
                     </a>
-                    
-                    <a  class="py-2 px-16 block text-sm text-gray-100 hover:bg-red-400 hover:text-gray-800"
-                        href="#">
-                        Maintenence Records
-                    </a>
+
                 </div>
                 </div>
 
@@ -101,9 +97,14 @@
                 </button>
 
                 <div x-show="open" class="bg-gray-700">
-                    <a class="py-2 px-16 block text-sm text-gray-100 hover:bg-blue-400 hover:text-gray-800" href="#">Summary Report</a>
-                    <a class="py-2 px-16 block text-sm text-gray-100 hover:bg-blue-400 hover:text-gray-800" href="#">Edit Times</a>
-                    <a class="py-2 px-16 block text-sm text-gray-100 hover:bg-blue-400 hover:text-gray-800" href="#">Displays</a>
+                    <a  class="py-2 px-16 block text-sm text-gray-100 hover:bg-blue-400 hover:text-gray-800"
+                        href="{{ url_for('wait_summary') }}">
+                        Summary Report
+                    </a>
+                    <a  class="py-2 px-16 block text-sm text-gray-100 hover:bg-blue-400 hover:text-gray-800"
+                        href="{{ url_for('wait_edit') }}">
+                        Edit Times
+                    </a>
                 </div>
                 </div>
 
@@ -126,9 +127,18 @@
                 </button>
 
                 <div x-show="open" class="bg-gray-700">
-                    <a class="py-2 px-16 block text-sm text-gray-100 hover:bg-green-300 hover:text-gray-800" href="#">Create Ticket</a>
-                    <a class="py-2 px-16 block text-sm text-gray-100 hover:bg-green-300 hover:text-gray-800" href="#">Edit Ticket</a>
-                    <a class="py-2 px-16 block text-sm text-gray-100 hover:bg-green-300 hover:text-gray-800" href="#">Ticket Records</a>
+                    <a  class="py-2 px-16 block text-sm text-gray-100 hover:bg-green-300 hover:text-gray-800"
+                        href="{{ url_for('create_ticket') }}">
+                        Create Ticket
+                    </a>
+                    <a  class="py-2 px-16 block text-sm text-gray-100 hover:bg-green-300 hover:text-gray-800"
+                        href="{{ url_for('edit_ticket') }}">
+                        Edit Ticket
+                    </a>
+                    <a  class="py-2 px-16 block text-sm text-gray-100 hover:bg-green-300 hover:text-gray-800"
+                        href="{{ url_for('ticket_records') }}">
+                        Ticket Records
+                    </a>
                 </div>
                 </div>
 
