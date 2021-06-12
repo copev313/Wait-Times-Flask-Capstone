@@ -60,6 +60,8 @@ class Ride(db.Model):
     name = db.Column(db.String(75), index=True, unique=True, nullable=False)
     status = db.Column(db.String(50), index=False, unique=False)
     waittime = db.Column(db.Integer, index=False, unique=False, nullable=False)
+    image = db.Column(db.String(200), index=False, unique=False)
+    optional_notes= db.Column(db.String(200), index=False, unique=False)
     
     def __init__(self, name:str, status:str, waittime:int):
         self.name = name.title()
@@ -80,8 +82,14 @@ class Ride(db.Model):
     def set_last_waittime_update(self, date=dt.utcnow()):
         self.last_waittime_update = date
 
-    def set_ride_status(self, status:str='NOT SET'):
+    def set_ride_status(self, status:str='CLOSED'):
         self.ride_status = status
 
-    def set_waittime(self, minutes=1440):
+    def set_waittime(self, minutes:int=1440):
         self.waittime = minutes
+
+    def set_ride_image(self, link_address:str):
+        self.ride_image = link_address
+
+    def write_optional_notes(self, notes:str):
+        self.optional_notes = notes
