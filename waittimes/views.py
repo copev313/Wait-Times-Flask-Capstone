@@ -13,7 +13,7 @@ from flask_login import (
 )
 from werkzeug.urls import url_parse
 from waittimes import app, db
-from .models import User
+from .models import User, Ride
 
 
 # 404 Page Not Found -- Custom Error Handler:
@@ -102,17 +102,44 @@ def edit_ride_info():
 
 
 # RIDES -->  Create Ride:
-@app.route('/admin/rides/create')
+@app.route('/admin/rides/create', methods=['GET', 'POST'])
 @login_required
 def create_ride():
+    # [CASE] POST request:
+    if (request.method == 'POST'):
+        ride_name = request.form['name']
+        ride = None
+
+        if request.form['waittime']:
+            ride_wt = request.form['waittime']
+            ride = Ride(ride_name, ride_wt)
+        else:
+            ride = Ride(ride_name)
+
+        if request.form['status']:
+            ride_status = request.form['status']
+            ride.set_ride_status(ride_status)
+        
+        if request.form['imagelink']:
+            ride_img = request.form['imagelink']
+            ride.set_ride_image(ride_img)
+
+        if request.form['notes']:
+            ride_notes = request.form['notes']
+            ride.write_optional_notes(ride_notes)
+
+        ride.create_ride()
+        return redirect(url_for('create_ride'))
+
     return render_template('create_a_ride.html')
+
 
 
 # WAIT TIMES -->  Summary Report:
 @app.route('/admin/waittimes/summary')
 @login_required
 def wait_summary():
-    rides_list=range(10)
+    rides_list = Ride.query.all()
     return render_template('wt_summary.html', rides=rides_list)
 
 

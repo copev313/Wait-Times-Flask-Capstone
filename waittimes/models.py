@@ -63,10 +63,10 @@ class Ride(db.Model):
     image = db.Column(db.String(200), index=False, unique=False)
     optional_notes= db.Column(db.String(200), index=False, unique=False)
     
-    def __init__(self, name:str, status:str, waittime:int):
+    def __init__(self, name:str, waittime:int=1440):
         self.name = name.title()
         self.set_ride_status('COMING SOON')
-        self.set_waittime()
+        self.set_waittime(waittime)
         self.set_last_maintenance_date()
         self.set_last_waittime_update()
         
@@ -75,6 +75,14 @@ class Ride(db.Model):
         return '<RIDE {} | status: {} | waittime: {} >'.format(
             self.name, self.status, self.waittime
         )
+        
+    def create_ride(self):
+        db.session.add(self)
+        db.session.commit()
+        
+    def delete_ride(self):
+        db.session.delete(self)
+        db.session.commit()
 
     def set_last_maintenance_date(self, date=dt.utcnow()):
         self.last_maintenance_date = date
@@ -83,13 +91,13 @@ class Ride(db.Model):
         self.last_waittime_update = date
 
     def set_ride_status(self, status:str='CLOSED'):
-        self.ride_status = status
+        self.status = status
 
-    def set_waittime(self, minutes:int=1440):
+    def set_waittime(self, minutes:int=360):
         self.waittime = minutes
 
     def set_ride_image(self, link_address:str):
-        self.ride_image = link_address
+        self.image = link_address
 
     def write_optional_notes(self, notes:str):
         self.optional_notes = notes
