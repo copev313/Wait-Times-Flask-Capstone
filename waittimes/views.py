@@ -112,7 +112,8 @@ def create_ride():
 @app.route('/admin/waittimes/summary')
 @login_required
 def wait_summary():
-    return render_template('wt_summary.html')
+    rides_list=range(10)
+    return render_template('wt_summary.html', rides=rides_list)
 
 
 # WAIT TIMES -->  Edit Times:
@@ -169,10 +170,10 @@ def account_settings():
                 return redirect(url_for('account_settings'))
 
             user.set_password(request.form['password'])
-            msg = "Password Updated!"
+            msg = "Update Successful!"
 
-        db.session.add(user)
-        db.session.commit()
+        # Despite the name, this actually updates the User's info.
+        user.create_user_account()
 
         # Handle Update Message:
         if msg:
@@ -182,6 +183,20 @@ def account_settings():
 
     else:
         return render_template('account_settings.html')
+
+
+# PROFILE --> Admin Mode Login:
+@app.route('/admin/profile/admin-mode-login', methods=['GET', 'POST'])
+@login_required
+def admin_mode_login():
+    return render_template('admin_mode_login.html')
+
+
+# PROFILE --> Admin Panel:
+@app.route('/admin/profile/admin-panel')
+@login_required
+def admin_panel():
+    return render_template('admin_panel.html')
 
 
 # PROFILE --> Logout [Redirect to Login Screen]
