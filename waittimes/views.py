@@ -91,7 +91,10 @@ def dashboard():
 @app.route('/admin/rides/dashboard')
 @login_required
 def ride_dashboard():
-    return render_template('ride_dashboard.html')
+    rides_list = Ride.query.all()
+    return render_template('ride_dashboard.html',
+                           rides=rides_list,
+                           length=len(rides_list))
 
 
 # RIDES -->  Change Ride Info:

@@ -4,8 +4,126 @@
 
 {% block dash_content %}
 <div class="text-left pb-4">
-  <h2 class="text-5xl font-bold text-gray-700">
-    Ride Dashboard
-  </h2>
+  <h2 class="text-5xl font-bold text-gray-700 mb-6 pb-6">Ride Dashboard</h2>
+  <div class="antialiased bg-gray-200 rounded-lg mt-2">
+    <div class="container mx-auto px-4 sm:px-8">
+        <div class="py-5">
+            <div class="my-2 flex sm:flex-row flex-col">
+                <div class="flex flex-row mb-1 ml-auto sm:mb-0">
+                    <div class="relative">
+                        <select class="appearance-none h-full border block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:bg-white" >
+                        {% for option in ['all', 'open', 'testing', 'closed', 'coming soon'] %}
+                          <option value="{{ option }}">{{ option.title() }}</option>
+                        {% endfor %}
+                        </select>
+                        <div
+                            class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
+                <div class="inline-block min-w-full shadow rounded-lg overflow-hidden">
+                    <table class="min-w-full leading-normal">
+                        <thead>
+                            <tr>
+                              {% for col in ['Name', 'Last Maintenenced', 'Wait Time', 'Status'] %}
+                                {% if col in ['Last Maintenenced', 'Wait Time', 'Status'] %}
+                                  <th
+                                    class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                    {{ col }}
+                                  </th>
+                                {% else %}
+                                  <th
+                                    class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                    {{ col }}
+                                  </th>
+                                {% endif %}
+                              {% endfor %}
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                          {% for ride in rides %}
+                            <tr>
+                              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                  <div class="flex items-center">
+                                      <div class="flex-shrink-0 w-10 h-10">
+                                          <img class="w-full h-full"
+                                              src="{{ ride.image }}"
+                                              alt="" />
+                                      </div>
+                                      <div class="ml-3">
+                                          <a  class="text-gray-900 font-semibold whitespace-no-wrap underline hover:text-gray-700" >
+                                            {{ ride.name }}
+                                          </a>
+                                      </div>
+                                  </div>
+                              </td>
+                              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-center">
+                                  <p class="text-gray-900 whitespace-no-wrap">
+                                    {{ ride.last_maintenance_date.strftime("%B %d, %Y") }}
+                                  </p>
+                              </td>
+                              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-center">
+                                  <p class="text-gray-900 whitespace-no-wrap">
+                                    {% if ride.status in ['CLOSED', 'COMING SOON']  %}
+                                      -
+                                    {% else %}
+                                      {{ ride.waittime }} MIN
+                                    {% endif %}
+                                  </p>
+                              </td>
+                              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-center">
+                                {% if ride.status == 'OPEN' %}
+                                  <span class="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
+                                    <span aria-hidden class="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
+                                    <span class="relative">{{ ride.status }}</span>
+                                  </span>
+                                {% endif %}
+                                {% if ride.status == 'TESTING' %}
+                                  <span class="relative inline-block px-3 py-1 font-semibold text-yellow-900 leading-tight">
+                                    <span aria-hidden class="absolute inset-0 bg-yellow-200 opacity-50 rounded-full"></span>
+                                    <span class="relative">{{ ride.status }}</span>
+                                  </span>
+                                {% endif %}
+                                {% if ride.status == 'CLOSED' %}
+                                  <span class="relative inline-block px-3 py-1 font-semibold text-red-800 leading-tight">
+                                    <span aria-hidden class="absolute inset-0 bg-red-300 opacity-50 rounded-full"></span>
+                                    <span class="relative">{{ ride.status }}</span>
+                                  </span>
+                                {% endif %}
+                                {% if ride.status == 'COMING SOON' %}
+                                  <span class="relative inline-block px-3 py-1 font-semibold text-purple-700 leading-tight">
+                                    <span aria-hidden class="absolute inset-0 bg-purple-300 opacity-50 rounded-full"></span>
+                                    <span class="relative">{{ ride.status }}</span>
+                                  </span>
+                                {% endif %}
+                              </td>
+                            </tr>
+                          {% endfor %}
+                        </tbody>
+                    </table>
+
+                    <div class="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between ">
+                        <div class="inline-flex mt-2 xs:mt-0">
+                            <button class="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-l">
+                              Prev
+                            </button>
+                            <button class="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-r">
+                              Next
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
 </div>
 {% endblock dash_content %}

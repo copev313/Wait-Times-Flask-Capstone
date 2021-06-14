@@ -72,7 +72,7 @@ class Ride(db.Model):
         
 
     def __repr__(self):
-        return '<RIDE {} | status: {} | waittime: {} >'.format(
+        return '<RIDE {} | status: [{}] | waittime: {}min >'.format(
             self.name, self.status, self.waittime
         )
         
