@@ -83,18 +83,17 @@ def register():
 # Main Dashboard Screen:
 @app.route('/admin/dashboard')
 @login_required
-def dashboard():
-    return render_template('dashboard.html')
+def dashboard(user='Mysterious Stranger'):
+    users_name = current_user.username or user
+    return render_template('dashboard.html', username=users_name)
 
 
 # RIDES -->  Rides Dashboard:
 @app.route('/admin/rides/dashboard')
 @login_required
-def ride_dashboard():
-    rides_list = Ride.query.all()
-    return render_template('ride_dashboard.html',
-                           rides=rides_list,
-                           length=len(rides_list))
+def ride_dashboard(rides_list=[]):
+    rides_list = Ride.query.all() or rides_list
+    return render_template('ride_dashboard.html', rides=rides_list)
 
 
 # RIDES -->  Change Ride Info:
@@ -149,8 +148,9 @@ def wait_summary():
 # WAIT TIMES -->  Edit Times:
 @app.route('/admin/waittimes/edit')
 @login_required
-def wait_edit():
-    return render_template('wt_edit.html')
+def wait_edit(rides_list=[]):
+    rides_list = Ride.query.all() or rides_list
+    return render_template('wt_edit.html', rides=rides_list)
 
 
 # TICKETS --> Create Ticket:

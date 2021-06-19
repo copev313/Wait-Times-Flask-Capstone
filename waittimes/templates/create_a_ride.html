@@ -33,12 +33,13 @@
                   <div class='w-3/4 md:w-1/2 px-3 mb-6'>
                       <label for="status" class='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'>Status</label>
                       <div class="flex-shrink w-full inline-block relative">
-                          <select form="rideform" name="status" id="status" class="block appearance-none text-gray-600 w-full bg-white border border-gray-400 shadow-inner px-4 py-2 pr-8 rounded">
+                          <select form="rideform" name="status" id="status"
+                                    class="block appearance-none w-full font-semibold bg-white border border-gray-400 shadow-inner px-4 py-2 pr-8 rounded">
                               <option>Choose ...</option>
-                              <option value="CLOSED">CLOSED</option>
-                              <option value="COMING SOON">COMING SOON</option>
-                              <option value="OPEN">OPEN</option>
-                              <option value="TESTING">TESTING</option>
+                              <option value="CLOSED" class="text-red-600">CLOSED</option>
+                              <option value="COMING SOON" class="text-purple-600">COMING SOON</option>
+                              <option value="OPEN" class="text-green-600">OPEN</option>
+                              <option value="TESTING" class="text-yellow-500">TESTING</option>
                           </select>
                           <div class="pointer-events-none absolute top-0 mt-3  right-0 flex items-center px-2 text-gray-600">
                               <svg  class="fill-current h-4 w-4"
@@ -65,7 +66,7 @@
                           </div>
                       </div>
                       <div class='w-full md:w-full px-3 mb-6'>
-                          <label for="imagelink" class='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'>Image Link</label>
+                          <label for="imagelink" class='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'>Image URL</label>
                           <input name="imagelink" id="imagelink" class='appearance-none block w-full bg-white text-gray-700 border border-gray-400 shadow-inner rounded-md py-3 px-4 leading-tight focus:outline-none  focus:border-gray-500' type='text' >
                       </div>
                       <div class='w-full md:w-full px-3 mb-6'>
@@ -73,7 +74,7 @@
                           <textarea name="notes" id="notes" maxlength="200" class='bg-gray-100 rounded-md border leading-normal resize-none w-full h-20 py-2 px-3 shadow-inner border border-gray-400 font-medium placeholder-gray-700 focus:outline-none focus:bg-white' ></textarea>
                       </div>
                       <div class="flex justify-center">
-                          <button class="bg-blue-400 text-gray-900 font-xl px-3 py-2 shadow-sm border-2 border-gray-800 rounded-xl mr-3"
+                          <button class="bg-blue-300 hover:bg-purple-400 text-gray-900 font-xl font-semibold px-3 py-2 shadow-sm border-2 border-gray-800 rounded-xl mr-3"
                                   type="submit">
                             Create
                           </button>
