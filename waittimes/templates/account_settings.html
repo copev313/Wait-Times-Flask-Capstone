@@ -1,6 +1,6 @@
 {% extends 'dash_base.html' %}
 
-{% block title %}{{ 'Account Settings' }}{% endblock title %}
+{% block title %}Account Settings{% endblock title %}
 
 {% block dash_content %}
 <div class="text-left pb-4">
@@ -8,17 +8,8 @@
     <h2 class="text-5xl font-bold text-gray-700">
       Account Settings
     </h2>
-
-    <div class="absolute top-1 right-1 mr-4 mt-4 bg-purple-200">
-      <a  href="{{ url_for('admin_mode_login') }}"
-          class="inline-block rounded-full text-white bg-purple-500 px-3 py-2 text-lg font-semibold mr-3 hover:text-gray-800">
-        Admin Mode
-      </a>
-    </div>
   </div>
 
-  
-  
   <div class="min-h-full py-6 flex flex-col justify-center sm:py-12">
     <div class="relative py-3 sm:max-w-xl sm:mx-auto">
       <div class="relative px-4 py-10 bg-gray-100 mx-8 md:mx-0 shadow-xl rounded-3xl sm:p-10">
@@ -59,7 +50,7 @@
               <hr class="p-4">
 
               <div class="py-2">
-                <label for="password" class="sr-only">Password</label>
+                <label for="password" class="sr-only">Updated Password</label>
                 <input  id="password"
                         name="password"
                         type="password"
@@ -84,7 +75,7 @@
             </div>
     
             <div>
-              <button type="submit" class="group relative w-1/2 mx-auto rounded-md flex justify-center py-2 px-4 border border-transparent text-base font-medium text-white bg-yellow-500 hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-400">
+              <button type="submit" class="group relative w-1/3 mx-auto rounded-md flex justify-center py-2 px-4 border border-transparent text-base font-medium text-white bg-yellow-500 hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-400">
                 Update
               </button>
             </div>
