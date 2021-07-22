@@ -16,6 +16,20 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///my_database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 
+'''MONGOALCHEMY
+# @link: https://pythonhosted.org/Flask-MongoAlchemy/
+
+# pip install Flask-MongoAlchemy
+
+app.config['MONGOALCHEMY_CONNECTION_STRING'] = os.environ.get('MONGODB_URI')
+
+db= MongoAlchemy(app)
+
+# Can get ride of migrate!
+'''
+
+
+
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 login_manager = LoginManager(app)
