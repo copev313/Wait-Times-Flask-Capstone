@@ -1,38 +1,37 @@
-'''https://pythonise.com/series/learning-flask/flask-application-structure'''
-
 from flask import Flask
 from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
-from dotenv import load_dotenv
 
-import os
-
-
-load_dotenv()
-
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///my_database.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
-
-'''MONGOALCHEMY
-# @link: https://pythonhosted.org/Flask-MongoAlchemy/
-
-# pip install Flask-MongoAlchemy
-
-app.config['MONGOALCHEMY_CONNECTION_STRING'] = os.environ.get('MONGODB_URI')
-
-db= MongoAlchemy(app)
-
-# Can get ride of migrate!
-'''
+from waittimes.config import Config
 
 
-
-db = SQLAlchemy(app)
-migrate = Migrate(app, db)
-login_manager = LoginManager(app)
+db = SQLAlchemy()
+migrate = Migrate()
+login_manager = LoginManager()
 login_manager.login_view = 'views.login'
+login_manager.login_message_category = 'info'
 
-from waittimes import views, models
+
+def create_app(config_class=Config):
+    app = Flask(__name__)
+    app.config.from_object(config_class)
+    
+    db.init_app(app)
+    migrate.init_app(app, db)
+    login_manager.init_app(app)
+    
+    from waittimes.errors.handlers import errors
+    from waittimes.main.routes import main
+    from waittimes.auth.routes import auth
+    from waittimes.rides.routes import rides
+    from waittimes.waittimes.routes import waittimes
+    from waittimes.tickets.routes import tickets
+    app.register_blueprint(main, url_prefix='')
+    app.register_blueprint(auth, url_prefix='')
+    app.register_blueprint(errors, url_prefix='/errors')
+    app.register_blueprint(rides, url_prefix='/rides')
+    app.register_blueprint(waittimes, url_prefix='/waittimes')
+    app.register_blueprint(tickets, url_prefix='/tickets')
+    
+    return app

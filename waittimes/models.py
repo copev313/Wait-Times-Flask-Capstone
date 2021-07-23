@@ -24,7 +24,7 @@ class User(db.Model, UserMixin):
         self.set_password(password)
 
     def __repr__(self):
-        return '<USER {} | {}>'.format(self.username, self.email)
+        return f"<USER {self.username} | {self.email}>"
 
     def create_user_account(self):
         db.session.add(self)

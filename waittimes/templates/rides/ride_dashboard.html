@@ -2,6 +2,11 @@
 
 {% block title %}Ride Dashboard{% endblock title %}
 
+{% block styles %}
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.css">
+{% endblock styles %}
+
+
 {% block dash_content %}
 
 <div class="text-left pb-4">
@@ -41,7 +46,8 @@
                                           />
                                       </div>
                                       <div class="ml-3">
-                                          <a  class="text-gray-900 text-lg font-semibold whitespace-no-wrap underline hover:text-gray-700" >
+                                          <a  href=f"/admin/rides/edit/{ride.id}"
+                                              class="text-gray-900 text-lg font-semibold whitespace-no-wrap underline hover:text-gray-700" >
                                             {{ ride.name }}
                                           </a>
                                       </div>
@@ -99,6 +105,5 @@
             </div>
     </div>
 </div>
-
 
 {% endblock dash_content %}
