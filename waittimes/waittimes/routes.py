@@ -12,7 +12,7 @@ waittimes = Blueprint('waittimes', __name__)
 @login_required
 def wait_summary():
     rides_list = Ride.query.all()
-    return render_template('wt_summary.html', rides=rides_list)
+    return render_template('wait_times/wt_summary.html', rides=rides_list)
 
 
 # Edit Times:
@@ -20,4 +20,4 @@ def wait_summary():
 @login_required
 def wait_edit(rides_list=[]):
     rides_list = Ride.query.all() or rides_list
-    return render_template('wt_edit.html', rides=rides_list)
+    return render_template('wait_times/wt_edit.html', rides=rides_list)

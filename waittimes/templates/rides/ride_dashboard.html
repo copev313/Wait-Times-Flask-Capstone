@@ -46,7 +46,7 @@
                                           />
                                       </div>
                                       <div class="ml-3">
-                                          <a  href=f"/admin/rides/edit/{ride.id}"
+                                          <a  href="{{ url_for('rides.edit_ride_info', ride_id=ride.id) }}"
                                               class="text-gray-900 text-lg font-semibold whitespace-no-wrap underline hover:text-gray-700" >
                                             {{ ride.name }}
                                           </a>
