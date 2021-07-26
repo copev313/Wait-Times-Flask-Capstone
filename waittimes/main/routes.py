@@ -1,7 +1,7 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash
-from flask_login import current_user, login_user, login_required
-from werkzeug.urls import url_parse
+from flask import Blueprint, render_template, redirect, url_for, flash
+from flask_login import current_user, login_required
 from waittimes.models import User
+from waittimes.main.forms import UpdateAccountForm
 
 
 main = Blueprint('main', __name__)
@@ -15,43 +15,38 @@ def dashboard(user='Mysterious Stranger'):
     return render_template('main/dashboard.html', username=users_name)
 
 
-# PROFILE --> Account Settings:
+# Update Account Settings Page:
 @main.route('/profile/settings', methods=['GET', 'POST'])
 @login_required
 def account_settings():
-    user = current_user
-    msg = ""
+    msg = "No Changes Saved"
+    form = UpdateAccountForm()
 
-    # [CASE] POST request:
-    if (request.method == 'POST'):
-        # Updating Username:
-        if request.form['username']:
-            user.username = request.form['username']
+    # Forms submitted:
+    if form.validate_on_submit():
+        # If the username is changed, save changes:
+        if (form.username.data != current_user.username):
+            current_user.username = form.username.data
             msg = "Update Successful!"
 
-        # Updating Email Address:
-        if request.form['email']:
-            user.email = request.form['email']
+        # If the email is changed, save changes:
+        if (form.email.data != current_user.email):
+            current_user.email = form.email.data
+            msg = "Update Successful!"
+        
+        # If the password is changed, save changes:
+        if (form.password.data != ""):
+            current_user.set_password = form.password.data
             msg = "Update Successful!"
 
-        # Updating Password:
-        if request.form['password']:
-            # [CASE] Confirm password DOES NOT match password:
-            if (request.form['password'] != request.form['password-confirm']):
-                flash("Passwords do not match. Please try again.", 'error')
-                return redirect(url_for('main.account_settings'))
-
-            user.set_password(request.form['password'])
-            msg = "Update Successful!"
-
-        # Despite the name, this actually updates the User's info.
-        user.create_user_account()
-
-        # Handle Update Message:
-        if msg:
-            flash(msg, 'success')
+        # Flash confirmation message:
+        flash(msg, 'success')
+        if (msg.startswith("Update")):
+            current_user.save_changes()
 
         return redirect(url_for('main.account_settings'))
 
-    else:
-        return render_template('main/account_settings.html')
+    # GET request / fill form with current user info:
+    form.username.data = current_user.username
+    form.email.data = current_user.email
+    return render_template('main/account_settings.html', form=form)
