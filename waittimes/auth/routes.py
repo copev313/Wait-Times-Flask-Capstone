@@ -1,5 +1,6 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash
-from flask_login import current_user, login_user, login_required, logout_user
+from flask import Blueprint, flash, redirect, render_template, request, url_for
+from flask_login import current_user, login_required, login_user, logout_user
+from waittimes.auth.forms import RegistrationForm, LoginForm
 from waittimes.models import User
 from werkzeug.urls import url_parse
 
@@ -18,56 +19,53 @@ def login_redirect():
 # Login Screen:
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
-    # [CASE] The current_user is logged in:
+    # Current_user is already logged in:
     if current_user.is_authenticated:
         return redirect(url_for('main.dashboard'))
 
-    # [CASE] POST request:
-    if (request.method == 'POST'):
-        user = User.query.filter_by(email=request.form['email']).first()
-
-        # [CASE] Incorrect email / password:
-        if not user or not user.check_password(request.form['password']):
-            flash("Invalid Account Credentials!")
+    form = LoginForm()
+    # Form is submitted:
+    if form.validate_on_submit():
+        # Check if user exists:
+        user = User.query.filter_by(email=form.email.data).first()
+        if user is None or not user.check_password(form.password.data):
+            flash('Invalid username or password!')
             return redirect(url_for('auth.login'))
-        
-        # [CASE] User Authenticated:
-        login_user(user, remember=request.form['remember'])
-        current_user.set_last_login()
+
+        # User is authenticated:
+        login_user(user, remember=form.remember.data)
         next_page = request.args.get('next')
-        if not next_page or (url_parse(next_page).netloc != ''):
+        if not next_page or url_parse(next_page).netloc != '':
             next_page = url_for('main.dashboard')
         return redirect(next_page)
 
-    return render_template('auth/login.html')
+    # GET request:
+    return render_template('auth/login.html', form=form)
 
 
 # Registration Screen:
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
-    # [CASE] The current_user is logged in:
+    # Current_user is already logged in:
     if current_user.is_authenticated:
         return redirect(url_for('main.dashboard'))
-    
-    # [CASE] POST request:
-    if (request.method == 'POST'):
-        # [CASE] Confirm password DOES NOT match password:
-        if (request.form['password'] != request.form['password-confirm']):
-            flash("Passwords do not match. Please try again.")
-            return redirect(url_for('auth.register'))
 
-        # Create User and add to DB:
-        user = User(username=request.form['username'],
-                    email=request.form['email'], 
-                    password=request.form['password'])
+    form = RegistrationForm()
+    # Form is submitted:
+    if form.validate_on_submit():
+        user = User(username=form.username.data,
+                    email=form.email.data,
+                    password=form.password.data)
+        # Creates the new user and saves it to the database:
         user.create_user_account()
-
         # Login User:
         login_user(user)
         current_user.set_last_login()
+        # Redirect to the dashboard:
         return redirect(url_for('main.dashboard'))
     
-    return render_template('main/register.html')
+    # GET request:
+    return render_template('auth/register.html', form=form)
 
 
 # Logout User:
