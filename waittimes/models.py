@@ -19,30 +19,43 @@ class User(db.Model, UserMixin):
     is_admin = db.Column(db.Boolean, default=False)
 
     def __init__(self, username, email, password):
+        '''Creates a new User object that can be saved to the database.'''
         self.username = username
         self.email = email.lower()
         self.set_password(password)
+        self.last_login = dt.utcnow()
 
     def __repr__(self):
+        '''Returns a string representation of the User object.'''
         return f"<USER {self.username} | {self.email}>"
 
     def create_user_account(self):
+        '''Adds the given user to the database.'''
         db.session.add(self)
+        db.session.commit()
+    
+    def save_changes(self):
+        '''Saves the changes made to the User object to the DB.'''
         db.session.commit()
 
     def delete_user_account(self):
+        '''Deletes the given user from the database.'''
         db.session.delete(self)
         db.session.commit()
 
     def set_password(self, password):
+        '''Sets the password to the given User.'''
         self.password_hash = generate_password_hash(password)
 
     def check_password(self, password):
+        '''Checks if the given password matches the password stored in the 
+        database when both are hashed.'''
         return check_password_hash(self.password_hash, password)
 
     def set_last_login(self):
+        '''Sets the last_login property of the given User to the current 
+        timestamp and saves changes to the DB.'''
         self.last_login = dt.utcnow()
-        db.session.add(self)
         db.session.commit()
 
     @login_manager.user_loader
