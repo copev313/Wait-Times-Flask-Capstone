@@ -2,15 +2,19 @@
 
 {% block content %}
 <header class="flex flex-row p-6 w-64">
+  <a href="/login">
     <div>
       <img  src="{{ url_for('static', filename='images/queue.svg') }}"
             alt="queue logo"
-            class="w-auto h-12 pr-1"
+            class="w-auto h-10 md:h-12 pr-1"
       />
     </div>
-    
+  </a>
+
+  <a href="/login">
     <div>
-      <h1 class="text-2xl font-bold text-yellow-800 pt-2" id="header-title">QueueTrackr</h1>
+      <h1 class="text-xl md:text-2xl font-bold text-yellow-800 pt-2" id="header-title">QueueTrackr</h1>
     </div>
+  </a>
 </header>
 {% endblock %}

@@ -16,13 +16,16 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
         {% block css %}{% endblock %}
     </head>
-    <body class="min-h-screen bg-gray-200">
+    <body class="flex flex-col min-h-screen bg-gray-200">
 
         {% block header %}{% endblock %}
 
-        {% block content %}{% endblock content %}
+        <div class="flex-grow mb-3">
+            {% block content %}{% endblock content %}
+        </div>
 
         {% block footer %}{% endblock %}
+
 
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
