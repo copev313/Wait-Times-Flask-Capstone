@@ -92,22 +92,36 @@ class Ride(db.Model):
     def create_ride(self):
         db.session.add(self)
         db.session.commit()
+    
+    def save_changes(self):
+        db.session.commit()
         
     def delete_ride(self):
         db.session.delete(self)
         db.session.commit()
 
-    def set_last_maintenance_date(self, date=dt.utcnow()):
-        self.last_maintenance_date = date
+    def set_last_maintenance_date(self):
+        self.last_maintenance_date = dt.utcnow()
 
-    def set_last_waittime_update(self, date=dt.utcnow()):
-        self.last_waittime_update = date
+    def set_last_waittime_update(self):
+        self.last_waittime_update = dt.utcnow()
 
     def set_ride_status(self, status:str='CLOSED'):
         self.status = status
 
     def set_waittime(self, minutes:int=360):
-        self.waittime = minutes
+        # Check if the waittime is a valid value:
+        if (minutes >= 0) and (minutes <= 1440):
+            # Round minutes to the nearest 5 minutes:
+            minutes = int(round(minutes / 5) * 5)
+            self.waittime = minutes
+        # Time is too small, set to 0:
+        elif (minutes < 0):
+            self.waittime = 0
+        # Time is too big, set to 1440:
+        else:
+            self.waittime = 1440
+        
 
     def set_ride_image(self, link_address:str):
         self.image = link_address
