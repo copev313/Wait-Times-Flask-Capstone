@@ -10,7 +10,7 @@ class UpdateAccountForm(FlaskForm):
     '''Form used for updating a User account.'''
 
     username = StringField('Username',
-                    validators=[DataRequired(), Length(min=3, max=16)],
+                    validators=[DataRequired(), Length(min=3, max=20)],
                     render_kw={'placeholder': 'Username',
                                'type': 'username' })
 

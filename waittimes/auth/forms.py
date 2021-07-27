@@ -9,7 +9,7 @@ class RegistrationForm(FlaskForm):
     '''Form used for creating a new User account.'''
 
     username = StringField('Username',
-                    validators=[DataRequired(), Length(min=3, max=16)],
+                    validators=[DataRequired(), Length(min=3, max=20)],
                     render_kw={'placeholder': 'Username',
                                'type': 'username' })                   
 
