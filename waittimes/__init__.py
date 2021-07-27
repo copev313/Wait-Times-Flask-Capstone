@@ -24,14 +24,16 @@ def create_app(config_class=Config):
     from waittimes.errors.handlers import errors
     from waittimes.main.routes import main
     from waittimes.auth.routes import auth
+    from waittimes.admin.routes import admin
     from waittimes.rides.routes import rides
     from waittimes.waittimes.routes import waittimes
     from waittimes.tickets.routes import tickets
-    app.register_blueprint(main, url_prefix='')
     app.register_blueprint(auth, url_prefix='')
-    app.register_blueprint(errors, url_prefix='/errors')
-    app.register_blueprint(rides, url_prefix='/rides')
-    app.register_blueprint(waittimes, url_prefix='/waittimes')
-    app.register_blueprint(tickets, url_prefix='/tickets')
+    app.register_blueprint(main, url_prefix='')
+    app.register_blueprint(admin, url_prefix='/admin')
+    app.register_blueprint(errors, url_prefix='/error')
+    app.register_blueprint(rides, url_prefix='/ride')
+    app.register_blueprint(waittimes, url_prefix='/waittime')
+    app.register_blueprint(tickets, url_prefix='/ticket')
     
     return app
