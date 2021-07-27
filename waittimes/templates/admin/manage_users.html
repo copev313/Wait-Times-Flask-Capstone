@@ -1,0 +1,67 @@
+{% extends 'dash_base.html' %}
+
+{% block title %}Manage Users{% endblock title %}
+
+{% block styles %}
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+{% endblock %}
+
+{% block dash_content %}
+    {% if current_user.is_admin %}
+        <div>
+            <h3 class="text-5xl font-bold text-gray-700 pt-4 pb-6 border-b-2 border-gray-400">
+                Manage Users
+            </h3>
+
+            <div class="my-5">
+                <table class="row-border w-full shadow-md mt-6 mr-3 pt-3" id="manage-users">
+                    <thead class="bg-gray-100 text-gray-500 text-left">
+                        <tr>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Last Login</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for user in users %}
+                            <tr>
+                                <td class="ml-3 font-medium"> {{ user.username }} </td>
+                                <td class="italic"> {{ user.email }} </td>
+                                <td> {% if user.is_admin %}Admin {% else %}User {% endif %} </td>
+                                <td>{% if user.last_login %}{{ user.last_login.strftime('%B %d, %Y') }}
+                                    {% else %}None
+                                    {% endif %}
+                                </td>
+                                <td class="font-medium text-sm">
+                                    <a  class="bg-blue-400 rounded-xl text-gray-800 mx-3 my-4 px-3 py-1 hover:text-white cursor-pointer"
+                                        href="{{ url_for('main.dashboard') }}"
+                                    >Edit</a>
+                                    <a  class="bg-red-400 rounded-xl text-gray-800 px-3 py-1 hover:text-white cursor-pointer"
+                                        href="{{ url_for('main.dashboard') }}"
+                                    >Delete</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% endif %}
+{% endblock dash_content %}
+
+{% block scripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/jquery.dataTables.min.js" integrity="sha512-BkpSL20WETFylMrcirBahHfSnY++H2O1W+UnEEO4yNIl+jI2+zowyoGJpbtk6bx97fBXf++WJHSSK2MV4ghPcg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        $(document).ready(
+            function() {
+                $('#manage-users').DataTable({
+                    "lengthMenu": [[10, 15, 20, 25], [10, 15, 20, 25]],
+                    
+                });
+        })
+    </script>
+{% endblock %}

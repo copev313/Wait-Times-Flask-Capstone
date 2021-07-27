@@ -26,41 +26,41 @@
             <div class="w-64 h-screen bg-gray-800 border-solid border-r-4 border-black">
             <nav class="mt-6">
                 <div class="bg-gray-700">
-                <button onclick="location.href='/dashboard';"
-                        class="mb-8 w-full flex justify-between items-center py-3 px-6 text-gray-100 cursor-pointer hover:bg-gray-600 hover:text-gray-100 focus:outline-none">
-                    <span class="flex items-center">
-                    <header class="flex flex-row">
-                        <div>
-                        <img  src="{{ url_for('static', filename='images/queue.svg') }}"
-                                alt="queue logo"
-                                class="w-auto h-12 pr-1"
-                        />
-                        </div>
+                    <button onclick="location.href='/dashboard';"
+                            class="mb-8 w-full flex justify-between items-center py-3 px-6 text-gray-100 cursor-pointer hover:bg-gray-600 hover:text-gray-100 focus:outline-none">
+                        <span class="flex items-center">
+                            <header class="flex flex-row">
+                                <div>
+                                <img  src="{{ url_for('static', filename='images/queue.svg') }}"
+                                        alt="queue logo"
+                                        class="w-auto h-12 pr-1"
+                                />
+                                </div>
 
-                        <div>
-                            <h1 class="text-2xl font-bold text-yellow-500 pt-2" id="header-title">QueueTrackr</h1>
-                        </div>
-                    </header>
-                    </span>
-                </button>
+                                <div>
+                                    <h1 class="text-2xl font-bold text-yellow-500 pt-2" id="header-title">QueueTrackr</h1>
+                                </div>
+                            </header>
+                        </span>
+                    </button>
                 </div>
 
                 <div x-data="{ open: false }">
-                <button @click="open = !open" class="mt-4 w-full flex justify-between items-center py-3 px-6 text-gray-100 cursor-pointer hover:bg-gray-700 hover:text-red-400 focus:outline-none">
-                    <span class="flex items-center">
-                    <img  src="{{ url_for('static', filename='images/ferris-wheel.svg') }}"
-                            alt="ferris wheel"
-                            class="h-auto w-6"
-                    />
-                    <span class="mx-4 font-medium">Rides</span>
-                    </span>
-                    <span>
-                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path x-show="! open" d="M9 5L16 12L9 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;"></path>
-                        <path x-show="open" d="M19 9L12 16L5 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                    </svg>
-                    </span>
-                </button>
+                    <button @click="open = !open" class="mt-4 w-full flex justify-between items-center py-3 px-6 text-gray-100 cursor-pointer hover:bg-gray-700 hover:text-red-400 focus:outline-none">
+                        <span class="flex items-center">
+                            <img  src="{{ url_for('static', filename='images/ferris-wheel.svg') }}"
+                                    alt="ferris wheel"
+                                    class="h-auto w-6"
+                            />
+                            <span class="mx-4 font-medium">Rides</span>
+                        </span>
+                        <span>
+                            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path x-show="! open" d="M9 5L16 12L9 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;"></path>
+                                <path x-show="open" d="M19 9L12 16L5 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                            </svg>
+                        </span>
+                    </button>
 
                 <div x-show="open" class="bg-gray-700">
                     <a  class="py-2 px-16 block text-sm text-gray-100 hover:bg-red-400 hover:text-gray-800"
@@ -159,6 +159,14 @@
                 </button>
 
                 <div x-show="open" class="bg-gray-700">
+
+                    {% if current_user.is_admin %}
+                        <a  class="py-2 px-16 block text-sm text-gray-100 hover:bg-yellow-300 hover:text-gray-800"
+                            href="{{ url_for('admin.manage_users') }}">
+                            Manage Users
+                        </a>
+                    {% endif %}
+
                     <a  class="py-2 px-16 block text-sm text-gray-100 hover:bg-yellow-300 hover:text-gray-800"
                         href="{{ url_for('main.account_settings') }}">
                         Account Settings
