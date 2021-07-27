@@ -13,6 +13,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.0-canary.4/base.min.css" integrity="sha512-+Y2CikxAKXqL51xTG8OPclTkh9rs35mY7G4/kwlAX7h7SYHeDuk2gyKUIp2scOxFD16wTVe84+7PtYV8cjz6vw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.0-canary.4/components.min.css" integrity="sha512-f6TS5CFJrH/EWmarcBwG54/kW9wwejYMcw+I7fRnGf33Vv4yCvy4BecCKTti3l8e8HnUiIbxx3V3CuUYGqR1uQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.0-canary.4/utilities.min.css" integrity="sha512-3kNKA7CLjkvtwC4QQROXw9vzfDCnp4pRyG3rO1BwyF2kn6TOMbBM+4AEpA2pvUHyCqfNALHHhe4+TzjAstRLJA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
         {% block styles %}{% endblock %}
 
@@ -23,7 +24,7 @@
         <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer ></script>
         <div class="bg-gray-300">
         <div class="flex flex-col sm:flex-row sm:justify-left">
-            <div class="w-64 h-screen bg-gray-800 border-solid border-r-4 border-black">
+            <div class="w-64 min-h-screen bg-gray-800 border-solid border-r-4 border-black">
             <nav class="mt-6">
                 <div class="bg-gray-700">
                     <button onclick="location.href='/dashboard';"
@@ -159,18 +160,11 @@
                 </button>
 
                 <div x-show="open" class="bg-gray-700">
-
-                    {% if current_user.is_admin %}
-                        <a  class="py-2 px-16 block text-sm text-gray-100 hover:bg-yellow-300 hover:text-gray-800"
-                            href="{{ url_for('admin.manage_users') }}">
-                            Manage Users
-                        </a>
-                    {% endif %}
-
                     <a  class="py-2 px-16 block text-sm text-gray-100 hover:bg-yellow-300 hover:text-gray-800"
                         href="{{ url_for('main.account_settings') }}">
                         Account Settings
                     </a>
+
                     <a  class="py-2 px-16 block text-sm text-gray-100 hover:bg-yellow-300 hover:text-gray-800"
                         href="{{ url_for('auth.logout') }}">
                         Logout

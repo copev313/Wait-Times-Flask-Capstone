@@ -9,52 +9,37 @@
 {% block dash_content %}
     {% if current_user.is_admin %}
         <div>
-            <div>
-                <h3 class="text-5xl font-bold text-gray-700 pt-4 pb-6 border-b-2 border-gray-400">
-                    Manage Users
-                </h3>
-
-                <a  href="{{ url_for('admin.create_user') }}"
-                    class="absolute top-1 right-1 bg-green-400 py-2 px-3 rounded-lg hover:bg-green-500 mt-6 mr-12">
-                    <span class="text-lg font-semibold text-gray-800 pt-4 pb-6 hover:text-gray-600">
-                        <i class="fas fa-user-plus"></i> Create User
-                    </span>
-                </a>
-            </div>
+            <h3 class="text-5xl font-bold text-gray-700 pt-4 pb-6 border-b-2 border-gray-400">
+                Manage Rides
+            </h3>
 
             <div class="my-5">
-                <table class="row-border w-full shadow-md mt-6 mr-3 pt-3" id="manage-users">
+                <table class="row-border w-full shadow-md mt-6 mr-3 pt-3" id="manage-rides">
                     <thead class="bg-gray-100 text-gray-500 text-left">
                         <tr>
-                            <th>Username</th>
-                            <th>Email</th>
-                            <th class="text-center">Role</th>
-                            <th class="text-center">Last Login</th>
+                            <th>Name</th>
+                            <th class="text-center">Status</th>
+                            <th class="text-center">Wait Time (Min.)</th>
+                            <th class="text-center">Last Updated</th>
+                            <th class="text-center">Last Maintenenced</th>
                             <th class="text-center">Actions</th>
                         </tr>
                     </thead>
 
                     <tbody>
-                        {% for user in users %}
+                        {% for ride in rides %}
                             <tr>
-                                <td class="ml-8 font-medium"> {{ user.username }} </td>
-                                <td class="italic"> {{ user.email }} </td>
-                                <td class="text-center"> {% if user.is_admin %}Admin {% else %}User {% endif %} </td>
-                                <td class="text-center">{% if user.last_login %}{{ user.last_login.strftime('%B %d, %Y (%H:%M)') }}
-                                    {% else %}None
-                                    {% endif %}
-                                </td>
+                                <td class="ml-3 font-medium"> {{ ride.name }} </td>
+                                <td class="text-center uppercase"> {{ ride.status }} </td>
+                                <td class="text-center"> {{ ride.waittime }} MIN </td>
+                                <td class="text-center"> {{ ride.last_waittime_update.strftime('%m/%d/%Y %H:%M:%S') }} </td>
+                                <td class="text-center"> {{ ride.last_maintenance_date.strftime('%B %d, %Y') }}</td>
                                 <td class="font-medium text-sm text-center">
                                     <a  class="bg-blue-400 rounded-xl text-gray-800 mx-3 my-4 px-3 py-1 hover:text-white cursor-pointer"
-                                        href="{{ url_for('admin.update_user', user_id=user.id) }}"
-                                    ><i class="fas fa-pen"></i> Edit </a>
-
-                                    <a  class="bg-purple-400 rounded-xl text-gray-800 mx-3 my-4 px-3 py-1 hover:text-white cursor-pointer"
-                                        href="#"
-                                    ><i class="fas fa-sync-alt"></i> Reset </a>
-
+                                        href="{{ url_for('main.dashboard') }}"
+                                    ><i class="fas fa-pen"></i> Edit</a>
                                     <a  class="bg-red-400 rounded-xl text-gray-800 px-3 py-1 hover:text-white cursor-pointer"
-                                        href="{{ url_for('admin.delete_user', user_id=user.id) }}"
+                                        href="{{ url_for('main.dashboard') }}"
                                     ><i class="fas fa-ban"></i> Delete</a>
                                 </td>
                             </tr>
@@ -72,15 +57,16 @@
     <script>
         $(document).ready(
             function() {
-                $('#manage-users').DataTable({
+                $('#manage-rides').DataTable({
                     columns: [
                         null,
-                        null,
                         { searchable: false },
-                        null,
+                        { searchable: false },
+                        { searchable: false },
+                        { searchable: false },
                         { orderable: false, searchable: false },
                     ],
-                    "pageLength": 15,
+                    "pageLength": 10,
                     "lengthMenu": [ 5, 10, 15 ],
                     //"lengthChange": false,
                 });
