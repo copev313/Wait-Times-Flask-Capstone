@@ -56,7 +56,9 @@
             <div class="text-red-600 text-center text-sm">
             {% for field in form.errors %}
               {% for error in form.errors[field] %}
+              <div class="text-center font-medium text-lg">
                 <p> {{ error }} </p>
+              </div>
               {% endfor %}
             {% endfor %}
             </div>
@@ -65,7 +67,7 @@
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 {% for category, message in messages %}
-                <div class="text-center text-xl font-medium">
+                <div class="text-center font-medium">
                   <p class="{% if category == 'success' %} text-green-600 {% elif category == 'info' %} text-blue-600 {% else %} text-red-600 {% endif %}">
                     {{ message }}
                   </p>

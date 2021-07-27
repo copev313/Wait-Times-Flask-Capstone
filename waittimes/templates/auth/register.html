@@ -67,7 +67,7 @@
           <div class="text-center text-pink-600 font-semibold text-lg pt-1">
             {% for field in form.errors %}
               {% for error in form.errors[field] %}
-                <p> {{ error }} </p>
+                <p> {{ field.label }} {{ error }} </p>
               {% endfor %}
             {% endfor %}
           </div>

@@ -1,6 +1,5 @@
 from flask import Blueprint, render_template, redirect, url_for, flash
 from flask_login import current_user, login_required
-from waittimes.models import User
 from waittimes.main.forms import UpdateAccountForm
 
 
@@ -10,9 +9,8 @@ main = Blueprint('main', __name__)
 # Main Dashboard Screen:
 @main.route('/dashboard')
 @login_required
-def dashboard(user='Mysterious Stranger'):
-    users_name = current_user.username or user
-    return render_template('main/dashboard.html', username=users_name)
+def dashboard():
+    return render_template('main/dashboard.html', current_user=current_user)
 
 
 # Update Account Settings Page:

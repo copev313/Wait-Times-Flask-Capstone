@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import (SelectField, StringField, SubmitField, TextAreaField, IntegerField)
-from wtforms.validators import DataRequired, Length, URL
-
+from wtforms import (IntegerField, SelectField, StringField, SubmitField,
+                     TextAreaField)
+from wtforms.validators import URL, DataRequired, Length, ValidationError
 
 status_choices = [('', 'Choose...'), ('CLOSED', 'CLOSED'), ('OPEN', 'OPEN'),
                   ('TESTING', 'TESTING'), ('COMING SOON', 'COMING SOON')]
@@ -17,6 +17,11 @@ class UpdateRideForm(FlaskForm):
     image_url = StringField('Image URL', validators=[URL()])
     notes = TextAreaField('Notes')
     submit = SubmitField('Update Ride')
+    
+    def validate_status(self, status):
+        '''Validates that the status is a valid choice.'''
+        if status.data == '':
+            raise ValidationError('Invalid status selected.')
 
 
 

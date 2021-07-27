@@ -27,26 +27,30 @@ def edit_ride_info(ride_id):
 
         # If ride name was changed, update ride:
         if form.name.data != ride.name:
+            name = ride.name
             ride.name = form.name.data
-            flash(f"Ride name was changed to {ride.name}", 'success')
+            flash(f"Ride name was changed from \"{name}\" to \"{ride.name}\"",
+                  'success')
             changes_made = True
             
         # If ride status was changed, update ride:
         if form.status.data != ride.status:
+            status = ride.status
             ride.status = form.status.data
-            flash(f"Ride status was changed to {ride.status}", 'success')
+            flash(f"Ride status was changed from {status} to {ride.status}",
+                  'success')
             changes_made = True
             
         # Ride image URL is updated if it was changed:
         if form.image_url.data != ride.image:
             ride.image = form.image_url.data
-            flash(f"Ride image was updated.", 'success')
+            flash(f"Ride image updated.", 'success')
             changes_made = True
             
         # Ride notes get updated if they were changed:
         if form.notes.data != ride.optional_notes:
             ride.optional_notes = form.notes.data
-            flash(f"Ride notes were updated.", 'success')
+            flash(f"Ride notes updated.", 'success')
             changes_made = True
         
         # If any changes were made, save the ride:
