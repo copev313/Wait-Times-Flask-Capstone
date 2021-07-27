@@ -36,7 +36,7 @@
                                 <td class="text-center"> {{ ride.last_maintenance_date.strftime('%B %d, %Y') }}</td>
                                 <td class="font-medium text-sm text-center">
                                     <a  class="bg-blue-400 rounded-xl text-gray-800 mx-3 my-4 px-3 py-1 hover:text-white cursor-pointer"
-                                        href="{{ url_for('main.dashboard') }}"
+                                        href="{{ url_for('rides.edit_ride_info', ride_id=ride.id) }}"
                                     ><i class="fas fa-pen"></i> Edit</a>
                                     <a  class="bg-red-400 rounded-xl text-gray-800 px-3 py-1 hover:text-white cursor-pointer"
                                         href="{{ url_for('main.dashboard') }}"

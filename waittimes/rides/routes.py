@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required
 from waittimes.models import Ride
-from waittimes.rides.forms import UpdateRideForm
+from waittimes.rides.forms import UpdateRideForm, CreateRideForm
 
 
 rides = Blueprint('rides', __name__)
@@ -73,30 +73,32 @@ def edit_ride_info(ride_id):
 @rides.route('/create', methods=['GET', 'POST'])
 @login_required
 def create_ride():
-    # [CASE] POST request:
-    if (request.method == 'POST'):
-        ride_name = request.form['name']
-        ride = None
-
-        if request.form['waittime']:
-            ride_wt = request.form['waittime']
-            ride = Ride(ride_name, ride_wt)
+    form = CreateRideForm()
+    # POST -- Form is validated before submit:
+    if form.validate_on_submit():
+        # Create new ride:
+        new_ride = None
+        # [CASE] Wait Time is specified:
+        if form.waittime.data:
+            new_ride = Ride(name=form.name.data,
+                            waittime=form.waittime.data)
+        # [CASE] No wait time defined:
         else:
-            ride = Ride(ride_name)
+            new_ride = Ride(name=form.name.data)
+            
+        new_ride.status = form.status.data
 
-        if request.form['status']:
-            ride_status = request.form['status']
-            ride.set_ride_status(ride_status)
-        
-        if request.form['imagelink']:
-            ride_img = request.form['imagelink']
-            ride.set_ride_image(ride_img)
+        # Add image if provided:
+        if form.image_url.data:
+            new_ride.image = form.image_url.data
 
-        if request.form['notes']:
-            ride_notes = request.form['notes']
-            ride.write_optional_notes(ride_notes)
+        # Add notes if provided:
+        if form.notes.data:
+            new_ride.optional_notes = form.notes.data
 
-        ride.create_ride()
-        return redirect(url_for('create_ride'))
+        # Add ride to database:
+        new_ride.create_ride()
+        return redirect(url_for('rides.ride_dashboard'))
 
-    return render_template('rides/ride_create.html')
+    # GET -- Render Create Ride Form:
+    return render_template('rides/ride_create.html', form=form)

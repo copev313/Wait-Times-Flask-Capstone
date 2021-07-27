@@ -104,10 +104,11 @@ def delete_user(user_id):
         return redirect(url_for('main.dashboard'))
 
     # User is an admin:
-    else:
-        user = User.query.get_or_404(user_id)
+    user = User.query.get_or_404(user_id)
+    if not user.is_admin:
         #user.delete_user_account()
-        return redirect(url_for('main.dashboard'))
+        pass
+    return redirect(url_for('auth.manage_users'))
 
 
 # Ride Management Page:
