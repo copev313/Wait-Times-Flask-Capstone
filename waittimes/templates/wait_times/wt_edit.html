@@ -3,84 +3,13 @@
 {% block title %}{{ 'Change Times' }}{% endblock title %}
 
 {% block dash_content %}
-<div class="text-left pb-4">
-  <h2 class="text-5xl font-bold text-gray-700">
-    Change Wait Times
-  </h2>
-</div>
+<div class="flex flex-col text-left pb-4">
+    <div class="text-5xl font-bold text-gray-700 mb-7">
+        Changing Wait Time
+    </div>
 
-
-<div class="content ml-2">
-    <div class="grid mt-8 gap-8 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
-  
-    {% for ride in rides %}
-            <div class="sm:h-50 w-auto">
-                <div class="bg-gray-50 shadow-md rounded-3xl p-4">
-                    <div class="relative">
-                        <img    src="{{ ride.image }}"
-                                alt="{{ ride.name }} icon"
-                                class="w-auto h-auto opacity-30 object-scale-down lg:object-cover lg:h-40 rounded-2xl"
-                        />
-
-                        <div class="absolute top-1 left-2 text-xl underline text-gray-900 font-bold">
-                            <span class="truncate">{{ ride.name }}</span>
-                        </div>
-
-                            <div class="absolute bottom-1 left-1">
-                                <div class="flex-1 inline-flex items-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 m-1 text-gray-800" fill="none"
-                                        viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
-                                        </path>
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z">
-                                        </path>
-                                    </svg>
-                                    <div class="font-bold text-lg" style="text-shadow: 1px 1px gray;">
-                                      {% if ride.status == 'OPEN' %}
-                                        <p class="text-green-600">{{ ride.status }}</p>
-                                      {% endif %}
-                                      {% if ride.status == 'CLOSED' %}
-                                        <p class="text-red-700">{{ ride.status }}</p>
-                                      {% endif %}
-                                      {% if ride.status == 'TESTING' %}
-                                        <p class="text-yellow-500">{{ ride.status }}</p>
-                                      {% endif %}
-                                      {% if ride.status == 'COMING SOON' %}
-                                        <p class="text-purple-700">{{ ride.status }}</p>
-                                      {% endif %}
-                                    </div>
-                                </div>
-                            </div>
-
-                            {% if ride.status in 'OPEN' %}
-                                <div class="absolute bottom-1 right-1">
-                                    <div class="flex-1 inline-flex items-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 m-1 text-gray-800" fill="none"
-                                            viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                        </svg>
-                                        <p>
-                                            <span class="font-semibold text-lg">
-                                                {{ ride.waittime }}
-                                            </span> Minutes
-                                        </p>
-                                    </div>
-                                </div>
-                            {% endif %}
-
-                            <button
-                                    class="absolute top-1 right-1 mb-2 md:mb-0 bg-gray-700 outline-none border-none font-semibold text-base px-4 py-1 shadow-sm tracking-wider text-white rounded-lg hover:text-blue-200 hover:bg-gray-800"
-                                    type="button" aria-label="edit">
-                                    EDIT
-                            </button>
-                        </div>
-            </div>
-        </div>
-    {% endfor %}
-
+    <div class="text-7xl text-right font-bold text-gray-100">
+        {{ ride.name }}
     </div>
 </div>
 
