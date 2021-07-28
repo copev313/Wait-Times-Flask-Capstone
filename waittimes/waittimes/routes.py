@@ -16,8 +16,8 @@ def wait_summary():
 
 
 # Edit Times:
-@waittimes.route('/edit')
+@waittimes.route('/edit/<int:ride_id>')
 @login_required
-def wait_edit(rides_list=[]):
-    rides_list = Ride.query.all() or rides_list
-    return render_template('wait_times/wt_edit.html', rides=rides_list)
+def wait_edit(ride_id):
+    ride = Ride.query.get_or_404(ride_id)
+    return render_template('wait_times/wt_edit.html', ride=ride)

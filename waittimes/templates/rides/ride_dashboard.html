@@ -36,7 +36,7 @@
                         <tbody>
                           {% for ride in rides %}
                             <tr>
-                              <td class="px-5 py-4 border-b border-gray-200 bg-white">
+                              <td class="px-5 py-3 border-b border-gray-200 bg-white">
                                   <div class="flex items-center">
                                       <div class="flex-shrink-0 w-10 h-10 mr-2">
                                           <img 
@@ -47,14 +47,14 @@
                                       </div>
                                       <div class="ml-3">
                                           <a  href="{{ url_for('rides.edit_ride_info', ride_id=ride.id) }}"
-                                              class="text-gray-900 text-base font-semibold whitespace-no-wrap underline hover:text-gray-700" >
+                                              class="text-gray-900 text-base font-bold whitespace-no-wrap underline hover:text-gray-700" >
                                             {{ ride.name }}
                                           </a>
                                       </div>
                                   </div>
                               </td>
 
-                              <td class="px-5 py-4 border-b border-gray-200 bg-white text-base text-center">
+                              <td class="px-5 py-4 border-b border-gray-200 bg-white text-sm text-center">
                                 {% if ride.status == 'OPEN' %}
                                   <span class="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
                                     <span aria-hidden class="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
