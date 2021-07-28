@@ -31,6 +31,7 @@ class AdminUpdateUserForm(FlaskForm):
             raise ValidationError("This email address is already in use!")
 
 
+
 class AdminCreateUserForm(FlaskForm):
     '''Form used by an admin to create a new User account.'''
 
@@ -65,3 +66,12 @@ class AdminCreateUserForm(FlaskForm):
         user = User.query.filter_by(email=email.data).first()
         if user:
             raise ValidationError("This email address is already in use!")
+
+
+class AdminDeleteUserForm(FlaskForm):
+    """Form added to admin edit user screen to remove users."""
+    
+    email = StringField('Confirm Email',
+                        validators=[DataRequired(), Email()],
+                         render_kw={'placeholder': 'Confirm Email'})
+    submit = SubmitField('Delete Account')

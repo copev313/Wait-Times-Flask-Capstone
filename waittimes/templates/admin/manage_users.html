@@ -16,46 +16,44 @@
 
                 <a  href="{{ url_for('admin.create_user') }}"
                     class="absolute top-1 right-1 bg-green-400 py-2 px-3 rounded-lg hover:bg-green-500 mt-6 mr-12">
-                    <span class="text-lg font-semibold text-gray-800 pt-4 pb-6 hover:text-gray-600">
+                    <span class="text-lg font-semibold text-gray-800 pt-4 pb-6 ">
                         <i class="fas fa-user-plus"></i> Create User
                     </span>
                 </a>
             </div>
 
             <div class="my-5">
-                <table class="row-border w-full shadow-md mt-6 mr-3 pt-3" id="manage-users">
+                <table class="cell-border w-full shadow-md mt-6 mr-3 pt-3" id="manage-users">
                     <thead class="bg-gray-100 text-gray-500 text-left">
                         <tr>
                             <th>Username</th>
                             <th>Email</th>
                             <th class="text-center">Role</th>
                             <th class="text-center">Last Login</th>
-                            <th class="text-center">Actions</th>
                         </tr>
                     </thead>
 
                     <tbody>
                         {% for user in users %}
                             <tr>
-                                <td class="ml-8 font-medium"> {{ user.username }} </td>
+                                <td class="ml-8 font-medium">
+                                    <a  href="{{ url_for('admin.update_user', user_id=user.id) }}"
+                                        class="cursor-pointer hover:underline hover:text-gray-700"
+                                    >
+                                        {{ user.username }}
+                                    </a>
+                                </td>
                                 <td class="italic"> {{ user.email }} </td>
-                                <td class="text-center"> {% if user.is_admin %}Admin {% else %}User {% endif %} </td>
-                                <td class="text-center">{% if user.last_login %}{{ user.last_login.strftime('%B %d, %Y (%H:%M)') }}
+                                <td class="text-center">
+                                    {% if user.is_admin %}
+                                        <span class="font-medium text-red-500">Admin</span>
+                                    {% else %}
+                                    <span class="font-medium text-blue-800">User</span>
+                                    {% endif %} </td>
+                                <td class="text-center">
+                                    {% if user.last_login %}{{ user.last_login.strftime('%B %d, %Y @ %H:%M') }}
                                     {% else %}None
                                     {% endif %}
-                                </td>
-                                <td class="font-medium text-sm text-center">
-                                    <a  class="bg-blue-400 rounded-xl text-gray-800 mx-3 my-4 px-3 py-1 hover:text-white cursor-pointer"
-                                        href="{{ url_for('admin.update_user', user_id=user.id) }}"
-                                    ><i class="fas fa-pen"></i> Edit </a>
-
-                                    <a  class="bg-purple-400 rounded-xl text-gray-800 mx-3 my-4 px-3 py-1 hover:text-white cursor-pointer"
-                                        href="#"
-                                    ><i class="fas fa-sync-alt"></i> Reset </a>
-
-                                    <a  class="bg-red-400 rounded-xl text-gray-800 px-3 py-1 hover:text-white cursor-pointer"
-                                        href="{{ url_for('admin.delete_user', user_id=user.id) }}"
-                                    ><i class="fas fa-ban"></i> Delete</a>
                                 </td>
                             </tr>
                         {% endfor %}
@@ -78,7 +76,6 @@
                         null,
                         { searchable: false },
                         null,
-                        { orderable: false, searchable: false },
                     ],
                     "pageLength": 15,
                     "lengthMenu": [ 5, 10, 15 ],

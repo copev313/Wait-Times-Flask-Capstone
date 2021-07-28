@@ -1,7 +1,8 @@
-from flask import Blueprint,redirect, render_template, url_for, flash
+from flask import Blueprint, flash, redirect, render_template, url_for
 from flask_login import current_user, login_required
-from waittimes.models import User, Ride
-from waittimes.admin.forms import AdminUpdateUserForm, AdminCreateUserForm
+from waittimes.admin.forms import (AdminCreateUserForm, AdminDeleteUserForm,
+                                   AdminUpdateUserForm)
+from waittimes.models import Ride, User
 
 
 admin = Blueprint('admin', __name__)
@@ -33,7 +34,7 @@ def update_user(user_id):
     form = AdminUpdateUserForm()
     made_changes = False
 
-    # POST -- Form is validated and submitted:
+    # POST -- Update Form is validated and submitted:
     if form.validate_on_submit():
         # Username is changed:
         if form.username.data not in [user.username, '']:
@@ -42,7 +43,6 @@ def update_user(user_id):
             made_changes = True
             flash(f"-Username changed from '{username}' to '{user.username}'.",
                     'success')
-
         # Email is changed:
         if form.email.data not in [user.email, '']:
             email = user.email
@@ -50,7 +50,6 @@ def update_user(user_id):
             made_changes = True
             flash(f"-Email changed from '{email}' to '{user.email}'.",
                     'success')
-
         # Admin status is changed:
         if form.admin.data != user.is_admin:
             admin = user.is_admin
@@ -58,7 +57,6 @@ def update_user(user_id):
             made_changes = True
             flash(f"-Admin rights changed from {admin} to {user.is_admin}.",
                     'success')
-
         # If changes are made update the user:
         if made_changes:
             user.save_changes()
@@ -66,9 +64,24 @@ def update_user(user_id):
             flash('No changes were made.', 'info')
         return redirect(url_for('admin.update_user', user_id=user.id))
 
+    delete_form = AdminDeleteUserForm()
+    # POST -- Delete Form is submitted:
+    if delete_form.validate_on_submit():
+        # Email matches the user to be deleted:
+        if delete_form.email.data == user.email:
+            # Delete the user:
+            user.delete_user_account()
+            return redirect(url_for('admin.manage_users'))
+        else:
+            flash('Email does not match the user to be deleted.', 'warning')
+            return redirect(url_for('admin.update_user', user_id=user.id))
+
     # GET -- Populate the form with the user data:
     form.admin.data = user.is_admin
-    return render_template('admin/user_edit.html', form=form, user=user)
+    return render_template('admin/user_edit.html',
+                           form=form,
+                           user=user,
+                           delete_form=delete_form)
 
 
 # Create User Account Page:
@@ -81,6 +94,7 @@ def create_user():
 
     # User is an admin:
     form = AdminCreateUserForm()
+    
     # POST -- Form is validated and submitted:
     if form.validate_on_submit():
         new_user = User(username=form.username.data,
@@ -96,7 +110,7 @@ def create_user():
 
 
 # Delete User Account Page:
-@admin.route('/delete-user/<int:user_id>', methods=['GET', 'POST'])
+@admin.route('/delete-user/<int:user_id>', methods=['POST'])
 @login_required
 def delete_user(user_id):
     # User is not an admin:
@@ -110,31 +124,3 @@ def delete_user(user_id):
         pass
     return redirect(url_for('auth.manage_users'))
 
-
-# Ride Management Page:
-@admin.route('/manage-rides', methods=['GET', 'POST'])
-@login_required
-def manage_rides():
-    # User is not an admin:
-    if not current_user.is_admin:
-        return redirect(url_for('main.dashboard'))
-
-    # User is an admin:
-    else:
-        all_rides = Ride.query.all()
-        return render_template('admin/manage_rides.html', rides=all_rides)
-
-
-# Ticket Management Page:
-@admin.route('/manage-rides', methods=['GET', 'POST'])
-@login_required
-def manage_tickets():
-    # User is not an admin:
-    if not current_user.is_admin:
-        return redirect(url_for('main.dashboard'))
-
-    # User is an admin:
-    else:
-        #all_tickets = Ticket.query.all()
-        #return render_template('admin/manage_rides.html', tickets=all_tickets)
-        return redirect(url_for('main.dashboard'))

@@ -100,10 +100,6 @@
                         href="{{ url_for('waittimes.wait_summary') }}">
                         Summary Report
                     </a>
-                    <a  class="py-2 px-16 block text-sm text-gray-100 hover:bg-blue-400 hover:text-gray-800"
-                        href="{{ url_for('waittimes.wait_edit') }}">
-                        Edit Times
-                    </a>
                 </div>
                 </div>
 
@@ -163,6 +159,13 @@
                         href="{{ url_for('main.account_settings') }}">
                         Account Settings
                     </a>
+
+                {% if current_user.is_admin %}
+                <a  class="py-2 px-16 block text-sm text-gray-100 hover:bg-yellow-300 hover:text-gray-800"
+                    href="{{ url_for('admin.manage_users') }}">
+                    Manage Users
+                </a>
+                {% endif %}
 
                     <a  class="py-2 px-16 block text-sm text-gray-100 hover:bg-yellow-300 hover:text-gray-800"
                         href="{{ url_for('auth.logout') }}">
